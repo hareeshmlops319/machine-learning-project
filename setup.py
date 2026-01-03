@@ -1,29 +1,34 @@
-''' The setup.py file is an essential part of packaging and distributing python projects. It is used by setup tools script for the network-security package. '''
-from setuptools import setup, find_packages
+''' The setup.py file is an essential part of packaging and distributing python projects.
+It is used by setuptools for the Ml-Project package. '''
 
-def  get_requirements()->list[str]:
-    ''' This function will return the list of requirements '''
+from setuptools import setup, find_packages
+from typing import List
+
+
+def get_requirements() -> List[str]:
+    '''This function returns the list of requirements'''
+
+    requirements_list: List[str] = []
+
     try:
-        with open('requirements.txt', 'r') as file:
-             # Read the requirments from the file.
-             lines=file.readlines()
-             # proces each line
-             requirements_list:list[str]=[]
-             for line in lines:
-                 requirment = line.strip()
-                 if requirment and requirment!= '-e .':
-                     requirements_list.append(requirment)
+        with open("requirements.txt", "r") as file:
+            for line in file:
+                requirement = line.strip()
+                if requirement and requirement != "-e .":
+                    requirements_list.append(requirement)
+
     except FileNotFoundError:
-        print("Requirments file not found")
+        print("requirements.txt file not found")
+
     return requirements_list
 
+
 setup(
-    name='network-security',
-    version='0.0.1',
-    author='Hareesh Yalamasetty',
+    name="ml-project",
+    version="0.0.1",
+    author="Hareesh Yalamasetty",
+    author_email="hareesh.yalamasetty1@gmail.com",
     packages=find_packages(),
     install_requires=get_requirements(),
-    description='A package for network security analysis and phishing detection',       
+    description="A package for network security analysis and phishing detection",
 )
-                     
-                     

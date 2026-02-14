@@ -1,3 +1,10 @@
 .env
 venv/
 logs
+Artifacts/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.pkl
+*.csv
+ml_project.egg-info/

@@ -4,7 +4,10 @@ from networksecurity.logging import logger
 class NetworkSecurityException(Exception):
     def __init__(self,error_message,error_details:sys):
         self.error_message = error_message
-        _,_,exc_tb = error_details.exc_info()
+        if hasattr(error_details, "exc_info"):
+            _,_,exc_tb = error_details.exc_info()
+        else:
+            _,_,exc_tb = sys.exc_info()
         
         self.lineno=exc_tb.tb_lineno
         self.file_name=exc_tb.tb_frame.f_code.co_filename 

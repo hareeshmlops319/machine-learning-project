@@ -10,6 +10,9 @@ TARGET_COLUMN = "Result"
 PIPELINE_NAME: str = "Networksecurity"
 ARTIFACT_DIR: str = "Artifacts"
 FILE_NAME: str = "phisingData.csv"
+TRAIN_FILE_NAME = "train.csv"
+TEST_FILE_NAME = "test.csv"
+
 
 
 """

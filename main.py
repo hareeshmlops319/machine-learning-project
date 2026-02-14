@@ -1,7 +1,8 @@
 from networksecurity.components.data_ingestion import DataIngestion
+import sys
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logging
-from networksecurity.entity.config_entity import DataIngestionConfig, TrainingPipelineConfig
+from networksecurity.entity.config_entity import DataIngestionConfig
 from networksecurity.entity.config_entity import DataIngestionConfig, TrainingPipelineConfig
 
 

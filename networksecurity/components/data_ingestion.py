@@ -6,7 +6,9 @@ import numpy as np
 import pandas as pd
 import pymongo
 from sklearn.model_selection import train_test_split
+# from networksecurity.entity.artifact_entity import DataIngestionArtifact
 from networksecurity.entity.artifact_entity import DataIngestionArtifact
+
 
 
 from dotenv import load_dotenv
@@ -31,7 +33,7 @@ class DataIngestion:
             df=pd.DataFrame(list(collection.find()))
             if "_id" in df.columns:
                 df=df.drop("_id",axis=1)
-                df.replace({"na":np.NAN},inplace=True)
+                df.replace({"na":np.nan},inplace=True)
                 return df
         except Exception as e:
             raise NetworkSecurityException(e,self)
@@ -42,12 +44,13 @@ class DataIngestion:
             dir_path=os.path.dirname(feature_store_file_path)
             os.makedirs(dir_path,exist_ok=True)
             df.to_csv(feature_store_file_path,index=False,header=True)
+            return df
         except Exception as e:
             raise NetworkSecurityException(e,self)
-    def split_data_as_train_test(self,df:pd.DataFrame):
+    def split_data_as_train_test(self,df: pd.DataFrame):
         try:
             train_set, test_set = train_test_split(
-                df, test_size=self.data(df, test_size=self.data_ingestion_config.train_test_split_ration)
+                df, test_size=self.data_ingestion_config.train_test_split_ratio, random_state=42
             )
             logging.info("Performed train test split on the dataframe")
             logging.info("Excited split_data_as_train_test method of Data_Ingesation class")
@@ -62,25 +65,15 @@ class DataIngestion:
         except Exception as e:
             raise NetworkSecurityException(e,self)
     
-
-    
     def initiate_data_ingestion(self):
         try:
             dataframe=self.export_collection_as_dataframe()
             dataframe=self.export_data_into_feature_store(dataframe)
             self.split_data_as_train_test(dataframe)
-            DataIngestionArtifact=self.DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
+            data_ingestion_artifact=DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
                                                              test_file_path=self.data_ingestion_config.testing_file_path)
-            return DataIngestionArtifact
+            return data_ingestion_artifact
 
         except Exception as e:
             raise NetworkSecurityException(e,self)
-
-
-
-    
-
-
-
-    
 
